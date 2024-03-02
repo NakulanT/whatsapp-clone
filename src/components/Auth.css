@@ -1,5 +1,30 @@
 .Authpage{
-    background-color:  	#075e54;
-    width: auto;
+    width: 100%;
     height: auto;
+    position: relative;
+}
+
+.AuthNav{
+    background-color:#075e54;
+    height: 200px;
+    width: auto;
+    padding-top: 15px;
+    padding-left: 25%;
+    display: flex;
+    text-transform: uppercase;
+}
+
+.AuthNav h1{
+    margin-left: 10px;
+    color: white;
+    font-size: 15px;
+    font-weight: 200;
+}
+
+.AuthCard{
+    position: relative;
+    display: flex;
+    background-color: white;
+    top:-20px;
+    width: 50%;
 }
