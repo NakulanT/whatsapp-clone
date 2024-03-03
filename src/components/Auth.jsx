@@ -1,21 +1,17 @@
 import React from "react";
-import './Auth.css';
+import "./Auth.css"; // Assuming your CSS file is named Auth.css
 
 const Auth = () => {
     return (
-        <div>
+        <div className="Authpage"> {/* Added the Authpage class to the wrapper div */}
             <div className="AuthNav">
                 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/dheereshagrwal/colored-icons@1.7.4/src/app/ci.min.css" />
-                <i class="ci ci-whatsapp ci-2x"></i>
+                <i className="ci ci-whatsapp ci-2x"></i>
                 <h1>Whatsapp Web</h1>
             </div>
             <div className="AuthCard">
-                <div>
-                    <h1>Sigin in with your google account</h1>
-                    <div>
-                        contiune with google
-                    </div>
-                </div>
+                    <h1>Sign in with your Google account</h1> {/* Corrected spelling of "Sign in" */}
+                    <div className="GoogleContinue">Continue with Google</div> {/* Corrected spelling of "Continue" */}
             </div>
         </div>
     );
