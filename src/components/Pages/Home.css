@@ -1,0 +1,25 @@
+.Home{
+    background-color: #033d36;
+}
+.HomePage{
+    background-color:  #25d366;
+    width: calc(100vw - 10%);
+    height: 100vh;
+    display: flex;
+    padding-top: 50px;
+    margin-left: 5%;
+    position: relative;
+    top :20px;
+}
+
+.Contacts{
+    background-color:  	#128c7e;
+    height: 100vh;
+    width: 500px;
+}
+
+.ContactCard{
+    width: 100%;
+    height: 100vh;
+    background-color:#ece5dd;
+}
