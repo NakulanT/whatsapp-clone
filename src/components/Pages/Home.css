@@ -1,25 +1,46 @@
 .Home{
-    background-color: #033d36;
+    background-color: #000000;
+    height: 110vh;
 }
 .HomePage{
-    background-color:  #25d366;
+    background-color:  #075e54;
     width: calc(100vw - 10%);
     height: 100vh;
     display: flex;
-    padding-top: 50px;
     margin-left: 5%;
     position: relative;
     top :20px;
+    border-radius: 1%;
+}
+
+.Nav{
+    width: 100%;
+    height: 50px;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    text-transform: uppercase;
+    padding-left: 20px;
+}
+.Nav h1 {
+    margin-left: 10px;
+    color: white;
+    font-size: 13px;
+    font-weight: 200;
 }
 
 .Contacts{
-    background-color:  	#128c7e;
+    background-color: white ;  	/*#128c7e; */
     height: 100vh;
     width: 500px;
+    position: relative;
+    top: 50px;
 }
 
 .ContactCard{
     width: 100%;
     height: 100vh;
     background-color:#ece5dd;
+    position: relative;
+    top: 50px;
 }
