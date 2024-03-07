@@ -1,6 +1,6 @@
 import React from "react";
-import Auth from "./components/Pages/Auth.jsx";
-import Home from "./components/Pages/Home.jsx";
+import Auth from "./Pages/Auth.jsx";
+import Home from "./Pages/Home.jsx";
 
 const Routes = () => {
     return(

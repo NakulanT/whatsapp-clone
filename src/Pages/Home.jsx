@@ -1,5 +1,6 @@
 import React from "react";
 import "./Home.css";
+import ChatProfile from "../components/ChatProfile";
 
 const Home = () => {
     return (
@@ -10,7 +11,14 @@ const Home = () => {
                 <i className="ci ci-whatsapp ci-1x"></i>
                 <h1>Whatsapp Web</h1>
                 </div>
-                <div className="Contacts"></div>
+                <div className="Contacts">
+                    <ChatProfile />
+                    <ChatProfile />
+                    <ChatProfile />
+                    <ChatProfile />
+                    <ChatProfile />
+                    <ChatProfile />
+                </div>
                 <div className="ContactCard"></div>
             </div>
         </div>
