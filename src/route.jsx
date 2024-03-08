@@ -5,8 +5,6 @@ import Home from "./Pages/Home.jsx";
 const Routes = () => {
     return(
         <div>
-            {<Auth />
-            }
             <Home />
 
         </div>
