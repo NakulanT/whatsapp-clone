@@ -1,10 +1,13 @@
-import './App.css';
-import Routes from './route.jsx';
+import React, { useState, useEffect } from 'react';
+// import { GoogleLogin, googleLogout, useGoogleLogin } from '@react-oauth/google';
+// import axios from 'axios';
+import Auth from './Pages/Auth';
+import Home from './Pages/Home';
 
-function App() {
-  return (
+const App = () => {
+  return(
     <div>
-      <Routes />
+      <Auth />
     </div>
   );
 }
