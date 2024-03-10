@@ -4,10 +4,17 @@ import axios from 'axios';
 import Home from './Home';
 import './Auth.css';
 
+import { app } from "../FirebaseConfig.js";
+import { getDatabase, ref, set, get } from "firebase/database"; // Import get function
+
+const db = getDatabase(app);
+
 function App() {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(false);
     const [userData, setUserData] = useState(null);
+    const [username, setUsername] = useState('');
+    const [showAuth, setShowAuth] = useState(true);
 
     const login = useGoogleLogin({
         onSuccess: (codeResponse) => setUser(codeResponse),
@@ -43,15 +50,33 @@ function App() {
         };
 
         fetchProfile();
-    }, [user,userData]);
+    }, [user]);
 
-    if (user && userData){
-      {console.log("Name:", userData.name); console.log("Email:", userData.email);}
-        return <Home name={userData.name} email={userData.email} picture={userData.picture} />
+    const handleUsernameChange = (e) => {
+        setUsername(e.target.value);
+    };
+
+    const handleSubmit = async (e) => { // Define e
+        e.preventDefault();
+        try {
+            const userRef = ref(db, `Users/${username}`);
+            const userSnapshot = await get(userRef);
+            if (userSnapshot.exists()) {
+                alert("Username alredy exits")
+                setShowAuth(false); // Hide authentication form
+            }
+        } catch (error) {
+            console.error(`Error checking user: ${error.message}`);
+        }
+    };
+
+    if (user && userData && showAuth) {
+        return <Home name={userData.name} email={userData.email} picture={userData.picture} username={username} />;
     } else {
         return (
             <div className="Authpage">
                 <div className="AuthNav">
+                    {console.log(userData,username)}
                     <link
                         rel="stylesheet"
                         href="https://cdn.jsdelivr.net/gh/dheereshagrwal/colored-icons@1.7.4/src/app/ci.min.css"
@@ -67,6 +92,17 @@ function App() {
                         onSuccess={login}
                         onFailure={login}
                     />
+                    {showAuth && (
+                        <form onSubmit={handleSubmit}>
+                            <input
+                                type="text"
+                                placeholder="Enter username"
+                                value={username}
+                                onChange={handleUsernameChange}
+                            />
+                            <button type="submit">Submit</button>
+                        </form>
+                    )}
                 </div>
             </div>
         );
