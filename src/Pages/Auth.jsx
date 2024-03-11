@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { GoogleLogin, useGoogleLogin } from '@react-oauth/google';
+import { GoogleLogin ,useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 import Home from './Home';
 import './Auth.css';
 
-import { app } from "../FirebaseConfig.js";
-import { getDatabase, ref, set, get } from "firebase/database"; // Import get function
+import { app } from '../FirebaseConfig.js';
+import { getDatabase, ref, set, get, push } from 'firebase/database';
 
 const db = getDatabase(app);
 
@@ -14,7 +14,7 @@ function App() {
     const [loading, setLoading] = useState(false);
     const [userData, setUserData] = useState(null);
     const [username, setUsername] = useState('');
-    const [showAuth, setShowAuth] = useState(true);
+    const [showAuth, setShowAuth] = useState(false);
 
     const login = useGoogleLogin({
         onSuccess: (codeResponse) => setUser(codeResponse),
@@ -23,6 +23,7 @@ function App() {
 
     useEffect(() => {
         const fetchProfile = async () => {
+            console.log(showAuth)
             if (user) {
                 try {
                     setLoading(true);
@@ -32,15 +33,13 @@ function App() {
                             Accept: 'application/json'
                         }
                     });
-                    console.log("Name:", res.data.name);
-                    console.log("Email:", res.data.email);
 
-                    // Set user data
                     setUserData({
                         name: res.data.name,
                         email: res.data.email,
-                        picture: res.data.picture // Assuming 'picture' is available in the response
+                        picture: res.data.picture
                     });
+                    
                 } catch (error) {
                     console.log(error);
                 } finally {
@@ -50,25 +49,50 @@ function App() {
         };
 
         fetchProfile();
-    }, [user]);
+    }, [user , userData]);
 
     const handleUsernameChange = (e) => {
         setUsername(e.target.value);
     };
+    const encodeEmail = (email) => {
+        return email.replace('.', '_').replace('@', '_');
+    };
 
-    const handleSubmit = async (e) => { // Define e
-        e.preventDefault();
+    const Continue = async () => {
+        console.log(username, userData, showAuth);
         try {
-            const userRef = ref(db, `Users/${username}`);
-            const userSnapshot = await get(userRef);
-            if (userSnapshot.exists()) {
-                alert("Username alredy exits")
-                setShowAuth(false); // Hide authentication form
+            if (userData) {
+                // Check if the email is already registered in the members collection
+                const emailRef = ref(db, `members/${encodeEmail(userData.email)}`);
+                const emailSnapshot = await get(emailRef);
+    
+                // Check if the username already exists in the Users collection
+                const usernameRef = ref(db, `Users/${username}`);
+                const usernameSnapshot = await get(usernameRef);
+    
+                if (!emailSnapshot.exists() && usernameSnapshot.exists()) {
+                    alert("Username is not registered. Please sign up.");
+                    setShowAuth(false);
+                } else if (emailSnapshot.exists()) {
+                    setShowAuth(true);
+                } else if (!emailSnapshot.exists() && !usernameSnapshot.exists()){
+                    
+                    await set(emailRef, {
+                        email: userData.email
+                    });
+    
+                    await set(usernameRef, {
+                        email: userData.email,
+                    });
+    
+                    setShowAuth(true);
+                }
             }
         } catch (error) {
-            console.error(`Error checking user: ${error.message}`);
+            console.error("Error:", error);
         }
     };
+    
 
     if (user && userData && showAuth) {
         return <Home name={userData.name} email={userData.email} picture={userData.picture} username={username} />;
@@ -76,7 +100,6 @@ function App() {
         return (
             <div className="Authpage">
                 <div className="AuthNav">
-                    {console.log(userData,username)}
                     <link
                         rel="stylesheet"
                         href="https://cdn.jsdelivr.net/gh/dheereshagrwal/colored-icons@1.7.4/src/app/ci.min.css"
@@ -92,15 +115,15 @@ function App() {
                         onSuccess={login}
                         onFailure={login}
                     />
-                    {showAuth && (
-                        <form onSubmit={handleSubmit}>
+                    {!showAuth && (
+                        <form>
                             <input
                                 type="text"
                                 placeholder="Enter username"
                                 value={username}
-                                onChange={handleUsernameChange}
+                                onChange={handleUsernameChange} // Listen for changes in the input field
                             />
-                            <button type="submit">Submit</button>
+                            <button type="button" onClick={Continue}>Sign Up</button>
                         </form>
                     )}
                 </div>

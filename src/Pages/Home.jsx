@@ -13,20 +13,20 @@ const Home = (props) => {
 
     const check = async () => {
         try {
-          const userRef = ref(db, `Users/${props.username}`);
-          const userSnapshot = await get(userRef);
+          // const userRef = ref(db, `Users/${props.username}`);
+          // const userSnapshot = await get(userRef);
       
-          if (userSnapshot.exists()) {
-            console.log(`User "${props.username}" already exists in the database!`);
-          } else {
-            const userData = {
-              name: props.name,
-            };
+          // if (userSnapshot.exists()) {
+          //   console.log(`User "${props.username}" already exists in the database!`);
+          // } else {
+          //   const userData = {
+          //     name: props.name,
+          //   };
       
-            await set(userRef, userData);
+          //   await set(userRef, userData);
       
-            console.log(`User "${props.username}" successfully added to the database!`);
-          }
+          //   console.log(`User "${props.username}" successfully added to the database!`);
+          // }
         } catch (error) {
           console.error(`Error handling user: ${error.message}`);
         }
