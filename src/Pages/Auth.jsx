@@ -16,7 +16,7 @@ function App() {
     const [username, setUsername] = useState('');
     const [showAuth, setShowAuth] = useState(false);
     const [Siginin, showSignin] = useState(false);
-    const [AlertMessage , SetAlertMessage] = useState('');
+    const [AlertMessage , SetAlertMessage] = useState('Loryehhsjs sjs sh sh s hs h asdakhsd');
 
     const login = useGoogleLogin({
         onSuccess: (codeResponse) => setUser(codeResponse),
@@ -112,13 +112,13 @@ function App() {
                 <div className="AuthCard">
 
                     <div className='CardSelector'>
-                    <a id="Signup" className={Siginin ? 'active' : ''} onClick={() => showSignin(false)}>Sign Up</a>
-                    <a id="Signin" className={!Siginin ? 'active' : ''} onClick={() => showSignin(true)}>Sign In</a>
+                    <a id="Signup" className={Siginin ? 'active' : ''} onClick={() => showSignin(false)}>Sign up</a>
+                    <a id="Signin" className={!Siginin ? 'active' : ''} onClick={() => showSignin(true)}>Sign in</a>
 
                     </div>
                     <div className='AlertMessages'>{AlertMessage}</div>
                     {Siginin ? (
-                        <div className='Siginin'>
+                        <div className='Signin'>
                             <GoogleLogin
                                 clientId="692055383262-r0t5oab7muk0fee2lgk39a5tpgdilmm7.apps.googleusercontent.com"
                                 buttonText="Sign in with Google 🚀"
@@ -127,7 +127,7 @@ function App() {
                             />
                         </div>
                     ) : (
-                        <div className='Siginup'>
+                        <div className='Signup'>
                             <form>
                                 <input
                                     type="text"
