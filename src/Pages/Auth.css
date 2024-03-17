@@ -22,12 +22,13 @@
     color: white;
     font-size: 15px;
     font-weight: 200;
+    margin-top: 0;
 }
 
 .AuthCard {
     background-color: rgb(255, 255, 255);
     width: 30%;
-    height: 500px;
+    height: auto;
     position: relative;
     top: -10%;
     box-sizing: border-box;
@@ -35,8 +36,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 10px 20px;
+    padding: 20px 20px;
     text-align: center;
+    padding-bottom: 50px;
 }
 
 .AuthCard h1 {

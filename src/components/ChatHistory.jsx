@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import './ChatHistory.css';
 import SendIcon from '@mui/icons-material/Send';
 import { app } from "../FirebaseConfig.js";
-import { getDatabase, ref, push } from "firebase/database";
+import { getDatabase, ref, push, onValue } from "firebase/database";
 
 const db = getDatabase(app);
 
@@ -12,45 +12,64 @@ const ChatHistory = (props) => {
     const [history, setHistory] = useState([]);
 
     useEffect(() => {
-        scrollToBottom(); 
-    }, [history]); 
+        const chatRef = ref(db, `Users/${props.senderUsername}/chats/${props.receiverUsername}`);
+        onValue(chatRef, (snapshot) => {
+            const chatData = snapshot.val();
+            if (chatData) {
+                const chatHistory = Object.values(chatData);
+                setHistory(chatHistory);
+                scrollToBottom();
+            }
+            else{
+                setHistory([]);
+            }
+        });
+    }, [props.senderUsername, props.receiverUsername]);
 
     const scrollToBottom = () => {
-        messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
-    }
+        if (messagesEndRef.current) {
+            messagesEndRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
+        }
+    };
+
+    useEffect(() => {
+        scrollToBottom();
+    }, [history]);
 
     const handleSubmit = (event) => {
         event.preventDefault();
         if (message.trim() !== '') {
-            const newMessage = ["user", message];
-            setHistory(prevHistory => [...prevHistory, newMessage]); 
-            saveMessageToDatabase(newMessage); // Save message to database
-            setMessage(''); 
-            scrollToBottom();
+            const newMessage = { content: message, role: 'user' }; // Role set as "user" for sender
+            setHistory(prevHistory => [...prevHistory, newMessage]);
+            saveMessageToDatabase(newMessage);
+            setMessage('');
         }
-    }
+    };
 
     const saveMessageToDatabase = (newMessage) => {
         try {
-            console.log(props)
-            console.log(`Users/${props.senderUsername}/chats/${props.receiverUsername}`)
-            const chatRef = ref(db, `Users/${props.senderUsername}/chats/${props.receiverUsername}`);
-            push(chatRef, {
-                role: newMessage[0],
-                content: newMessage[1],
-            });
+            // Save message in sender's chat reference with role as "user"
+            const senderChatRef = ref(db, `Users/${props.senderUsername}/chats/${props.receiverUsername}`);
+            push(senderChatRef, newMessage);
+
+            if (props.senderUsername !== props.receiverUsername){
+
+            // Save message in receiver's chat reference with role as "contact"
+            const receiverChatRef = ref(db, `Users/${props.receiverUsername}/chats/${props.senderUsername}`);
+            push(receiverChatRef, { ...newMessage, role: 'contact' });
+        }
         } catch (error) {
             console.error(`Error saving message to database: ${error.message}`);
         }
     };
-    
+
     const handleChange = (event) => {
         setMessage(event.target.value);
-    }
+    };
 
     const renderMessages = () => {
         return history.map((msg, index) => {
-            const [role, content] = msg;
+            const { role, content } = msg;
             if (role === 'user') {
                 return (
                     <div key={index} className="Messages-right">
@@ -71,7 +90,7 @@ const ChatHistory = (props) => {
 
     return (
         <div className="ChatHistory">
-            <div className="Informer">Youre are in {props.receiverUsernam} page</div>
+            <div className="Informer">You are in {props.receiverUsername}'s page</div>
             <div className="Messages">
                 {renderMessages()}
                 <div ref={messagesEndRef} /> {/* Reference for scrolling to bottom */}
@@ -84,6 +103,6 @@ const ChatHistory = (props) => {
             </div>
         </div>
     );
-}
+};
 
 export default ChatHistory;

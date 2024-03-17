@@ -16,7 +16,7 @@ function App() {
     const [username, setUsername] = useState('');
     const [showAuth, setShowAuth] = useState(false);
     const [Siginin, showSignin] = useState(false);
-    const [AlertMessage, SetAlertMessage] = useState('Loryehhsjs sjs sh sh s hs h asdakhsd');
+    const [AlertMessage, SetAlertMessage] = useState('');
 
     const login = useGoogleLogin({
         onSuccess: (codeResponse) => setUser(codeResponse),
@@ -51,10 +51,18 @@ function App() {
 
         fetchProfile();
     }, [user, userData]);
-
     const handleUsernameChange = (e) => {
-        setUsername(e.target.value);
+        const value = e.target.value;
+        const validUsername = /^[a-z0-9_]*$/; // Regex for lowercase letters, numbers, and underscores only
+    
+        if (!validUsername.test(value)) {
+            SetAlertMessage("Username can only contain lowercase letters, numbers, and underscores.");
+        } else {
+            SetAlertMessage('');
+            setUsername(value);
+        }
     };
+    
     const encodeEmail = (email) => {
         return email.replace(/\./g, '_dot_').replace(/@/g, '_at_');
     };
@@ -118,7 +126,8 @@ function App() {
     
                     await set(usernameRef, {
                         email: userData.email,
-                        username : username
+                        username : username,
+                        picture : userData.picture
                     });
     
                     setShowAuth(true);

@@ -3,6 +3,7 @@ import "./Home.css";
 import ChatProfile from "../components/ChatProfile";
 import Auth from "./Auth.jsx";
 import LogoutIcon from '@mui/icons-material/Logout';
+import SearchIcon from '@mui/icons-material/Search';
 import ChatHistory from "../components/ChatHistory.jsx";
 import { app } from "../FirebaseConfig.js";
 import { getDatabase, ref, query, orderByChild, equalTo, set, onValue ,get } from "firebase/database";
@@ -15,11 +16,20 @@ const Home = (props) => {
     const [searchResults, setSearchResults] = useState([]);
     const [chatProfiles, setChatProfiles] = useState([]);
 
+    // Function to handle contact clicks and update selectedContact state
     const handleContactClick = (name) => {
-        setSelectedContact(name);
-        createChat(name);
+        setSelectedContact(name); // Update selectedContact state with the clicked contact's name
     };
 
+    // Function to scroll to the bottom of the chat history
+    const scrollToBottom = () => {
+        const chatHistory = document.querySelector('.ChatHistory'); // Get the chat history element
+        if (chatHistory) {
+            chatHistory.scrollTop = chatHistory.scrollHeight; // Scroll to the bottom of the chat history
+        }
+    };
+
+    // Function to search users based on the search query
     const searchUsers = async () => {
         try {
             const usersRef = ref(db, 'Users');
@@ -32,9 +42,9 @@ const Home = (props) => {
                         username: userData[key].username,
                         name: key,
                     }));
-                    setSearchResults(userList);
+                    setSearchResults(userList); // Update searchResults state with the search results
                 } else {
-                    setSearchResults([]);
+                    setSearchResults([]); // Clear searchResults if no results found
                 }
             });
         } catch (error) {
@@ -42,17 +52,20 @@ const Home = (props) => {
         }
     };
 
+    // Effect to trigger user search when searchQuery changes
     useEffect(() => {
         if (searchQuery.trim() !== '') {
-            searchUsers();
+            searchUsers(); // Call searchUsers function when searchQuery changes and is not empty
         }
     }, [searchQuery]);
 
+    // Function to handle form submission for user search
     const handleSearch = (event) => {
         event.preventDefault();
-        searchUsers();
+        searchUsers(); // Call searchUsers function on form submission
     };
 
+    // Function to create a chat between sender and receiver
     const createChat = async (receiverUsername) => {
         try {
             const senderUsername = props.username;
@@ -71,47 +84,56 @@ const Home = (props) => {
         }
     };
 
-
+    // Function to load previous chats for the current user
     const loadPreviousChats = () => {
-      try {
-          const chatRef = ref(db, `Users/${props.username}/chats`);
-  
-          onValue(chatRef, (snapshot) => {
-              const chatData = snapshot.val();
-              if (chatData) {
-                  const profiles = Object.entries(chatData).map(([key, value], index) => (
-                      <ChatProfile key={index} name={key} onClick={() => handleContactClick(value)} />
-                  ));
-                  setChatProfiles(profiles);
-              } else {
-                  setChatProfiles([]);
-              }
-          });
-      } catch (error) {
-          console.log(error);
-          setChatProfiles([]);
-      }
-  };
-  
+        try {
+            const chatRef = ref(db, `Users/${props.username}/chats`);
 
+            onValue(chatRef, (snapshot) => {
+                const chatData = snapshot.val();
+                if (chatData) {
+                    const profiles = Object.entries(chatData).map(([key, value], index) => {
+                        if (key !== searchQuery){
+                        return (
+                            <ChatProfile key={index} name={key} onClick={() => handleContactClick(key)} />
+                        );}
+
+                    });
+                    setChatProfiles(profiles); // Update chatProfiles state with chat profiles
+                } else {
+                    setChatProfiles([]);
+                     // In this line I want to set the Sethistroy to null which is locted in profileHistroy jsx
+                }
+            });
+        } catch (error) {
+            console.log(error);
+            setChatProfiles([]); // Clear chatProfiles on error
+        }
+    };
+
+    // Effect to load previous chats when the component mounts or when username changes
     useEffect(() => {
         loadPreviousChats();
     }, [props.username]);
+
+    // Effect to scroll to bottom when selectedContact changes
+    useEffect(() => {
+        scrollToBottom(); // Scroll to bottom when selected contact changes
+    }, [selectedContact]);
 
     return (
         <div className="Home">
             <div className="HomePage">
                 <div className="Nav">
                     <img src={props.picture} alt="profile" />
-                    <h1>{props.name}</h1>
                     <h1>{props.username}</h1>
                     <a href={<Auth />}><LogoutIcon /></a>
                 </div>
                 <div className="Contacts">
                     <div className="Search">
                         <form onSubmit={handleSearch}>
-                            <input type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} placeholder="Search by username" />
-                            <button type="submit">Search</button>
+                            <SearchIcon className="SearchIcon"/>
+                            <input type="text" value={searchQuery} onChange={(e) => {setSearchQuery(e.target.value.toLowerCase()); loadPreviousChats(); }} placeholder="Search by username" />
                         </form>
                     </div>
                     {searchResults.map((user, index) => (

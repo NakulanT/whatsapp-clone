@@ -1,49 +1,40 @@
-.SendMessage{
-    display: flex;
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 100%;
-}
-
-.ChatHistory{
-    margin: 0;
+.ChatHistory {
     width: 100%;
     height: 100%;
-    background-color: beige;
-    overflow-y: auto;
-
-
+    background-image: url('../images/Doogle2.jpeg');
+    opacity: 0.9;
+    background-size: 30%;
+    overflow: hidden; /* Prevents overflow from affecting other elements */
 }
-.ChatHistory form {
+
+.Informer {
     position: sticky;
-    bottom: 20px;
+    top: 0;
+    width: 100%;
+    height: 3%;
+    background-color: lightgray;
     display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+}
+
+.Messages {
     width: 100%;
-    padding: 0 20px;
+    height: 90%;
+    overflow-y: auto; /* Enables vertical scrolling */
 }
 
-.ChatHistory input {
-    overflow: visible;
-    margin: 10px;
-    height: 35px;
-    flex: 100%; 
-
-}
-
-.ChatHistory button {
-    color: #075e54;
-    background-color: transparent;
-    border-color: transparent;
-    flex: 10%; /* Button takes up 30% of the width */
-}
-
-.Messages{
+.SendMessage {
+    margin-top: 20px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
     width: 100%;
-    height:auto;
-    margin-bottom: 85px;
-    
+    z-index: 1; 
 }
+
+
 .Messages-left{
     position: relative;
     width: 40%;
@@ -57,12 +48,12 @@
     color: white;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 }
-.Messages-right{
 
+.Messages-right{
     position: relative;
     left: 55%;
     width: 40%;
-    background-color: rgb(66, 107, 255);
+    background-color: #075e54;
     padding: 0.5px 5px;
     margin-top: 10px;
     margin-bottom: 20px;
@@ -77,12 +68,11 @@
     left: -8px; /* Adjust the position to align with the message */
     width: 0;
     height: 0;
-    top:12px;
+    top: 12px;
     border-top: 5px solid transparent;
     border-bottom: 5px solid transparent;
     border-right: 10px solid #075e54; 
     color: white;
-    
 }
 
 .Messages-right div {
@@ -90,18 +80,42 @@
     right: -8px; /* Adjust the position to align with the message */
     width: 0;
     height: 0;
-    bottom:12px;
+    bottom: 12px;
     border-top: 5px solid transparent;
     border-bottom: 5px solid transparent;
-    border-left: 10px solid rgb(66, 107, 255);
+    border-left: 10px solid #075e54;
     color: white;
+}
+
+.Messages h5 {
+    font-size: 0.9em;
+    font-weight: 500;
+    padding: 0 10px;
     
 }
 
+.ChatHistory form {
+    display: flex;
+    width: 95%;
+    padding: 0 20px;
+}
+
+.ChatHistory input {
+    overflow: visible;
+    margin: 10px;
+    height: 35px;
+    flex: 1; /* Adjust to take up remaining space */
+}
+
+.ChatHistory button {
+    color: #075e54;
+    background-color: transparent;
+    border-color: transparent;
+    flex: 0 0 50px; /* Adjust width as needed */
+}
 
 
-
-@keyframes slidin-left{
+@keyframes slidin-left {
     0% {
         left: -100%;
         opacity: 0;
@@ -109,11 +123,10 @@
     100% {
         left: 0%;
         opacity: 1;
-}
+    }
 }
 
-
-@keyframes slidin-right{
+@keyframes slidin-right {
     0% {
         left: 100%;
         opacity: 0;
@@ -121,5 +134,5 @@
     100% {
         left: 55%;
         opacity: 1;
-}
+    }
 }
