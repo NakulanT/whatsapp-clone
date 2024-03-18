@@ -33,7 +33,8 @@ const ChatProfile = ({ name, onClick }) => {
     return (
         <div className="ChatProfile" onClick={handleClick}>
             <div className="ProfileIcon">
-                    <img src={profilePicture} alt={<Person4Icon />} />
+                {console.log(profilePicture)}
+                    <img src={profilePicture}  />
             </div>
             <div className="latestMessage">
                 {name}

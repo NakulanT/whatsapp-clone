@@ -88,6 +88,15 @@ const ChatHistory = (props) => {
         });
     };
 
+        const isLastMessageVisible = () => {
+        if (messagesEndRef.current) {
+            const { top } = messagesEndRef.current.getBoundingClientRect();
+            const { height } = window.innerHeight;
+            return top <= height;
+        }
+        return false;
+    };
+
     return (
         <div className="ChatHistory">
             <div className="Informer">You are in {props.receiverUsername}'s page</div>

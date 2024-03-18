@@ -125,7 +125,7 @@ const Home = (props) => {
         <div className="Home">
             <div className="HomePage">
                 <div className="Nav">
-                    <img src={props.picture} alt="profile" />
+                    <img src={props.picture}  />
                     <h1>{props.username}</h1>
                     <a href={<Auth />}><LogoutIcon /></a>
                 </div>

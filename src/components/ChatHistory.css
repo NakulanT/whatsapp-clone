@@ -104,7 +104,7 @@
     overflow: visible;
     margin: 10px;
     height: 35px;
-    flex: 1; /* Adjust to take up remaining space */
+    flex: 1; 
 }
 
 .ChatHistory button {
