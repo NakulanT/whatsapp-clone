@@ -3,6 +3,8 @@ import './ChatHistory.css';
 import SendIcon from '@mui/icons-material/Send';
 import { app } from "../FirebaseConfig.js";
 import { getDatabase, ref, push, onValue } from "firebase/database";
+import DoneIcon from '@mui/icons-material/Done';
+import DoneAllIcon from '@mui/icons-material/DoneAll';
 
 const db = getDatabase(app);
 
@@ -75,6 +77,7 @@ const ChatHistory = (props) => {
                     <div key={index} className="Messages-right">
                         <div></div>
                         <h5>{content}</h5>
+                        <DoneIcon className="DoneIcon" />
                     </div>
                 );
             } else {
@@ -82,6 +85,7 @@ const ChatHistory = (props) => {
                     <div key={index} className="Messages-left">
                         <div></div>
                         <h5>{content}</h5>
+                        <DoneAllIcon className="DoneAllIcon" />
                     </div>
                 );
             }
