@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import './ChatHistory.css';
 import SendIcon from '@mui/icons-material/Send';
 import { app } from "../FirebaseConfig.js";
-import { getDatabase, ref, push, onValue } from "firebase/database";
+import { getDatabase, ref, push, onValue, get } from "firebase/database";
 import DoneIcon from '@mui/icons-material/Done';
 import DoneAllIcon from '@mui/icons-material/DoneAll';
 
@@ -10,8 +10,10 @@ const db = getDatabase(app);
 
 const ChatHistory = (props) => {
     const [message, setMessage] = useState('');
-    const messagesEndRef = useRef(null);
     const [history, setHistory] = useState([]);
+    const messagesEndRef = useRef(null);
+    const [senderProfilePicture, setSenderProfilePicture] = useState('');
+    const [receiverProfilePicture, setReceiverProfilePicture] = useState('');
 
     useEffect(() => {
         const chatRef = ref(db, `Users/${props.senderUsername}/chats/${props.receiverUsername}`);
@@ -21,12 +23,28 @@ const ChatHistory = (props) => {
                 const chatHistory = Object.values(chatData);
                 setHistory(chatHistory);
                 scrollToBottom();
-            }
-            else{
+            } else {
                 setHistory([]);
             }
         });
     }, [props.senderUsername, props.receiverUsername]);
+
+    useEffect(() => {
+        fetchProfilePicture(props.senderUsername, setSenderProfilePicture);
+        fetchProfilePicture(props.receiverUsername, setReceiverProfilePicture);
+    }, [props.senderUsername, props.receiverUsername]);
+
+    const fetchProfilePicture = async (username, setProfilePicture) => {
+        try {
+            const pictureRef = ref(db, `Users/${username}/picture`);
+            const pictureSnapshot = await get(pictureRef);
+            if (pictureSnapshot.exists()) {
+                setProfilePicture(pictureSnapshot.val());
+            }
+        } catch (error) {
+            console.error(`Error fetching profile picture for ${username}:`, error);
+        }
+    };
 
     const scrollToBottom = () => {
         if (messagesEndRef.current) {
@@ -41,7 +59,7 @@ const ChatHistory = (props) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         if (message.trim() !== '') {
-            const newMessage = { content: message, role: 'user' }; // Role set as "user" for sender
+            const newMessage = { content: message, role: 'user', timestamp: new Date().toISOString() }; // Include timestamp
             setHistory(prevHistory => [...prevHistory, newMessage]);
             saveMessageToDatabase(newMessage);
             setMessage('');
@@ -50,16 +68,13 @@ const ChatHistory = (props) => {
 
     const saveMessageToDatabase = (newMessage) => {
         try {
-            // Save message in sender's chat reference with role as "user"
             const senderChatRef = ref(db, `Users/${props.senderUsername}/chats/${props.receiverUsername}`);
             push(senderChatRef, newMessage);
 
-            if (props.senderUsername !== props.receiverUsername){
-
-            // Save message in receiver's chat reference with role as "contact"
-            const receiverChatRef = ref(db, `Users/${props.receiverUsername}/chats/${props.senderUsername}`);
-            push(receiverChatRef, { ...newMessage, role: 'contact' });
-        }
+            if (props.senderUsername !== props.receiverUsername) {
+                const receiverChatRef = ref(db, `Users/${props.receiverUsername}/chats/${props.senderUsername}`);
+                push(receiverChatRef, { ...newMessage, role: 'contact' });
+            }
         } catch (error) {
             console.error(`Error saving message to database: ${error.message}`);
         }
@@ -71,34 +86,38 @@ const ChatHistory = (props) => {
 
     const renderMessages = () => {
         return history.map((msg, index) => {
-            const { role, content } = msg;
+            const { role, content, timestamp } = msg;
+            const profilePicture = role === 'user' ? senderProfilePicture : receiverProfilePicture;
+            const formattedTimestamp = new Date(timestamp).toLocaleString(undefined, {
+                year: 'numeric',
+                month: 'numeric',
+                day: 'numeric',
+                hour: 'numeric',
+                minute: 'numeric',
+                hour12: true,
+            });
+            
+
             if (role === 'user') {
                 return (
                     <div key={index} className="Messages-right">
+                        <img src={profilePicture} alt="Profile" className="Profile-picture" />
+                        <h5>{content}</h5><br></br>
+                        <h6>{formattedTimestamp}</h6>
                         <div></div>
-                        <h5>{content}</h5>
-                        <DoneIcon className="DoneIcon" />
                     </div>
                 );
             } else {
                 return (
                     <div key={index} className="Messages-left">
-                        <div></div>
+                        <img src={profilePicture} alt="Profile" className="Profile-picture" />
                         <h5>{content}</h5>
-                        <DoneAllIcon className="DoneAllIcon" />
+                        <h6>{formattedTimestamp}</h6>
+                        <div></div>
                     </div>
                 );
             }
         });
-    };
-
-        const isLastMessageVisible = () => {
-        if (messagesEndRef.current) {
-            const { top } = messagesEndRef.current.getBoundingClientRect();
-            const { height } = window.innerHeight;
-            return top <= height;
-        }
-        return false;
     };
 
     return (

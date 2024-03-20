@@ -5,8 +5,9 @@ import Auth from "./Auth.jsx";
 import LogoutIcon from '@mui/icons-material/Logout';
 import SearchIcon from '@mui/icons-material/Search';
 import ChatHistory from "../components/ChatHistory.jsx";
+import SettingsIcon from '@mui/icons-material/Settings';
 import { app } from "../FirebaseConfig.js";
-import { getDatabase, ref, query, orderByChild, equalTo, set, onValue ,get } from "firebase/database";
+import { getDatabase, ref, query, orderByChild, equalTo, set, onValue, get } from "firebase/database";
 
 const db = getDatabase(app);
 
@@ -93,16 +94,17 @@ const Home = (props) => {
                 const chatData = snapshot.val();
                 if (chatData) {
                     const profiles = Object.entries(chatData).map(([key, value], index) => {
-                        if (key !== searchQuery){
-                        return (
-                            <ChatProfile key={index} name={key} onClick={() => handleContactClick(key)} />
-                        );}
+                        if (key !== searchQuery) {
+                            return (
+                                <ChatProfile key={index} name={key} onClick={() => handleContactClick(key)} />
+                            );
+                        }
 
                     });
                     setChatProfiles(profiles); // Update chatProfiles state with chat profiles
                 } else {
                     setChatProfiles([]);
-                     // In this line I want to set the Sethistroy to null which is locted in profileHistroy jsx
+                    // In this line I want to set the Sethistroy to null which is locted in profileHistroy jsx
                 }
             });
         } catch (error) {
@@ -125,15 +127,19 @@ const Home = (props) => {
         <div className="Home">
             <div className="HomePage">
                 <div className="Nav">
-                    <img src={props.picture}  />
+                    <img src={props.picture} />
                     <h1>{props.username}</h1>
-                    <a href={<Auth />}><LogoutIcon /></a>
+                    <div>
+                        <a className="SettingIcon"><SettingsIcon /></a>
+                        <a href={<Auth />} className="LogoutIcone"><LogoutIcon /></a>
+                    </div>
+
                 </div>
                 <div className="Contacts">
                     <div className="Search">
                         <form onSubmit={handleSearch}>
-                            <SearchIcon className="SearchIcon"/>
-                            <input type="text" value={searchQuery} onChange={(e) => {setSearchQuery(e.target.value.toLowerCase()); loadPreviousChats(); }} placeholder="Search by username" />
+                            <SearchIcon className="SearchIcon" />
+                            <input type="text" value={searchQuery} onChange={(e) => { setSearchQuery(e.target.value.toLowerCase()); loadPreviousChats(); }} placeholder="Search by username" />
                         </form>
                     </div>
                     {searchResults.map((user, index) => (
