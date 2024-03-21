@@ -1,10 +1,9 @@
 .ChatProfile {
     display: flex;
     flex-direction: row;
-    background-color: rgb(246, 246, 246);
     gap: 20px;
     padding: 10px 10px;
-    border-bottom: 2px solid rgb(190, 190, 190);
+    border-bottom: 2px solid rgba(32,44,51,255);
     width: 100%;
     height: 50px;
     align-items: center;
@@ -19,7 +18,7 @@
 }
 
 .ChatProfile {
-    color: #075e54;
+    color:#00a884 ;
     font-size: 1em;
     font-weight: 700;
     font-style: italic;

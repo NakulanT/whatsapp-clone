@@ -1,7 +1,7 @@
 .ChatHistory {
     width: 100%;
     height: 100%;
-    background-image: url('../images/Doogle2.jpeg');
+    background-image: url('../images/Doogle6.jpg');
     opacity: 0.9;
     background-size: 30%;
     overflow: hidden; /* Prevents overflow from affecting other elements */
@@ -12,7 +12,7 @@
     top: 0;
     width: 100%;
     height: 3%;
-    background-color: lightgray;
+    background-color: rgba(32,44,51,255);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -21,7 +21,7 @@
 
 .Messages {
     width: 100%;
-    height: 80%;
+    height: 85%;
     overflow-y: auto; /* Enables vertical scrolling */
 }
 
@@ -32,6 +32,8 @@
     bottom: 0;
     width: 100%;
     z-index: 1; 
+    background-color: rgba(32,44,51,255);
+    color: #00a884;
 }
 
 
@@ -39,19 +41,23 @@
     position: relative;
     width: 40%;
     height: auto;
-    background-color:#075e54;
+    background-color:#005c4b;
     padding: 0.5px 5px;
     margin-top: 20px;
     margin-left: 50px;
     margin-bottom: 20px;
     animation: slidin-left  0.5s ease-in;
-    border-radius: 20px;
     color: white;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
     display: flex;
     justify-content: baseline;
     align-items: center;
     padding-bottom: 2px;
+    border-bottom: 3px solid #00a884;
+    border-top-left-radius:20px;
+    border-top-right-radius:20px;
+    border-bottom-left-radius:10px;
+    border-bottom-right-radius:10px;
 }
 
 .Messages-right{
@@ -59,16 +65,20 @@
     left: 55%;
     width: 40%;
     height: auto;
-    background-color: #075e54;
+    background-color: #005c4b;
     margin-top: 10px;
     margin-bottom: 20px;
     animation: slidin-right 0.6s ease-in-out;
     color: white;
-    border-radius: 20px;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
     display: flex;
     align-items: center;
     padding-bottom: 2px;
+    border-bottom: 3px solid #00a884;
+    border-top-left-radius:20px;
+    border-top-right-radius:20px;
+    border-bottom-left-radius:10px;
+    border-bottom-right-radius:10px;
 }
 
 .Messages-left div {
@@ -79,7 +89,7 @@
     top: 12px;
     border-top: 5px solid transparent;
     border-bottom: 5px solid transparent;
-    border-right: 10px solid #075e54; 
+    border-right: 10px solid #005c4b; 
     color: white;
 }
 
@@ -91,7 +101,7 @@
     top: 12px;
     border-top: 5px solid transparent;
     border-bottom: 5px solid transparent;
-    border-left: 10px solid #075e54;
+    border-left: 10px solid #005c4b;
     color: white;
 }
 
@@ -113,6 +123,9 @@
     margin: 10px;
     height: 35px;
     flex: 1; 
+    background-color: rgba(42,57,66,255);
+    border: 0;
+    border-radius: 10px;
 }
 
 .ChatHistory button {
@@ -136,7 +149,7 @@
     position: absolute;
     top: 10px;
     left: -40px;
-    color: #075e54;
+    color: #00a884;
     width: 30px;
     height: 30px;
     border-radius: 50%;
@@ -151,7 +164,9 @@
     font-style: italic;
     font-weight: 400;
 }
-
+#submitButton{
+    color: #00a884;
+}
 @keyframes slidin-left {
     0% {
         left: -100%;

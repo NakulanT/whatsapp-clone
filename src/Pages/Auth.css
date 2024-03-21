@@ -10,7 +10,7 @@
     position: relative;
     padding-top: 50px;
     padding-left: 50%;
-    background-color: #075e54;
+    background-color: #111b21;
     height: 200px;
     width: 100%;
     display: flex;
@@ -138,5 +138,5 @@
 }
 
 .AuthCard button:hover {
-    background-color: #064c42; /* Darken the color on hover */
+    background-color: #111b21; /* Darken the color on hover */
 }
