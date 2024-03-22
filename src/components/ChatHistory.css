@@ -3,7 +3,7 @@
     height: 100%;
     background-image: url('../images/Doogle6.jpg');
     opacity: 0.9;
-    background-size: 30%;
+    background-size: 20%;
     overflow: hidden; /* Prevents overflow from affecting other elements */
 }
 
@@ -17,6 +17,8 @@
     align-items: center;
     justify-content: center;
     z-index: 1;
+    color: #00a884;
+    font-style: italic;
 }
 
 .Messages {
@@ -126,6 +128,7 @@
     background-color: rgba(42,57,66,255);
     border: 0;
     border-radius: 10px;
+    padding-left: 20px;
 }
 
 .ChatHistory button {
@@ -138,7 +141,7 @@
 .Messages-right img{
     position: absolute;
     top: 3px;
-    right: -40px;
+    right: -45px;
     color: #075e54;
     width: 30px;
     height: 30px;
@@ -147,8 +150,8 @@
 
 .Messages-left img{
     position: absolute;
-    top: 10px;
-    left: -40px;
+    top: 3px;
+    left: -45px;
     color: #00a884;
     width: 30px;
     height: 30px;
