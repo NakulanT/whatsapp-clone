@@ -3,6 +3,7 @@ import { GoogleLogin, useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 import Home from './Home';
 import './Auth.css';
+import GoogleIcon from '@mui/icons-material/Google';
 
 import { app } from '../FirebaseConfig.js';
 import { getDatabase, ref, set, get } from 'firebase/database';
@@ -40,6 +41,9 @@ function App() {
                         email: res.data.email,
                         picture: res.data.picture
                     });
+
+                    {<div className='GoogleIndicator'>{res.data.email} has authorized</div>}
+                    console.log("here logined");
 
                 } catch (error) {
                     console.log(error);
@@ -149,6 +153,7 @@ function App() {
         return (
             <div className="Authpage">
                 <div className="AuthNav">
+                {userData && <div className='GoogleIndicator'>{<GoogleIcon />}has Authorized</div>}
                     <link
                         rel="stylesheet"
                         href="https://cdn.jsdelivr.net/gh/dheereshagrwal/colored-icons@1.7.4/src/app/ci.min.css"

@@ -4,13 +4,14 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow-x: hidden; /* Add this line */
 }
 
 .AuthNav {
     position: relative;
     padding-top: 50px;
     padding-left: 50%;
-    background-color: #00a884;
+    background-color:#075e54;
     height: 200px;
     width: 100%;
     display: flex;
@@ -93,7 +94,7 @@
 
 #Signin a:hover,
 #Signup a:hover {
-    color: #064c42; /* Darken the color on hover */
+    color: #00a884; /* Darken the color on hover */
 }
 
 
@@ -138,5 +139,47 @@
 }
 
 .AuthCard button:hover {
-    background-color: #111b21 ; /* Darken the color on hover */
+    background-color:  #00a884 ; /* Darken the color on hover */
+}
+
+.GoogleIndicator {
+    position: fixed;
+    right: -100px; /* Start off-screen */
+    top: 15px;
+    width: auto;
+    height: 40px;
+    background-color: #00a884;
+    color: rgb(255, 249, 249);
+    gap: 8px;
+    padding: 0 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    font-size: 0.8em;
+    animation: slideIn 3.5s forwards; /* Animation duration and fill mode */
+}
+
+@keyframes slideIn {
+    0% {
+        right: -200px; /* Start position off-screen */
+    }
+    20% {
+        right: 60px; /* Move in and start fading in */
+        opacity: 0.9;
+    }
+    40% {
+        opacity: 0.7;
+    }
+    60% {
+        opacity: 0.5;
+    }
+    80% {
+        opacity: 0.2;
+    }
+    100% {
+        right: 60px;
+        opacity: 0; /* Fade out completely */
+        display: none; /* Hide the element */
+    }
 }
