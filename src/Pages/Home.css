@@ -99,3 +99,8 @@ position:absolute;
 top: 20px;
 left: 8%;
 }
+
+
+@media (max-width : 330px) {
+    
+}

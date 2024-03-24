@@ -18,6 +18,7 @@ function App() {
     const [showAuth, setShowAuth] = useState(false);
     const [Siginin, showSignin] = useState(false);
     const [AlertMessage, SetAlertMessage] = useState('');
+    const[GoogleAlert , SetGoogleAlert] = useState(false);
 
     const login = useGoogleLogin({
         onSuccess: (codeResponse) => setUser(codeResponse),
@@ -42,8 +43,7 @@ function App() {
                         picture: res.data.picture
                     });
 
-                    {<div className='GoogleIndicator'>{res.data.email} has authorized</div>}
-                    console.log("here logined");
+                    SetGoogleAlert(true)
 
                 } catch (error) {
                     console.log(error);
@@ -144,6 +144,8 @@ function App() {
             console.error("Error:", error);
         }
     };
+    const screenWidth = window.innerWidth;
+    console.log('Screen width:', screenWidth, 'pixels');
     
     
 
@@ -153,12 +155,14 @@ function App() {
         return (
             <div className="Authpage">
                 <div className="AuthNav">
-                {userData && <div className='GoogleIndicator'>{<GoogleIcon />}has Authorized</div>}
+                {GoogleAlert && <div className='GoogleIndicator'>{<GoogleIcon />}has Authorized</div>}
                     <link
                         rel="stylesheet"
                         href="https://cdn.jsdelivr.net/gh/dheereshagrwal/colored-icons@1.7.4/src/app/ci.min.css"
                     />
                     <i className="ci ci-whatsapp ci-2x"></i>
+                    <i className="ci ci-whatsapp ci-6x"></i>
+
                     <h1>Whatsapp Web</h1>
                 </div>
                 <div className="AuthCard">
@@ -200,8 +204,8 @@ function App() {
                     )}
                     <div className='CardSelector'>
                         {Siginin ? (
-                            <a id="Signup" className={Siginin} onClick={() => {showSignin(false); SetAlertMessage('');}}>Don't have an account ? Signup</a>
-                        ) : (<a id="Signin" className={!Siginin} onClick={() => {showSignin(true); SetAlertMessage('');}}>Already have an account ? Sign in</a>)}
+                            <a id="Signup" className={Siginin} onClick={() => {showSignin(false); SetAlertMessage('');   SetGoogleAlert(false);}}>Don't have an account ? Signup</a>
+                        ) : (<a id="Signin" className={!Siginin} onClick={() => {showSignin(true); SetAlertMessage(''); SetGoogleAlert(false);}}>Already have an account ? Sign in</a>)}
                     </div>
 
                 </div>

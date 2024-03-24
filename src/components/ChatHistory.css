@@ -191,3 +191,9 @@
         opacity: 1;
     }
 }
+
+@media (max-width: 330px) {
+    .ChatHistory {
+        overflow-x: auto; /* or overflow-x: scroll; */
+    }
+}
