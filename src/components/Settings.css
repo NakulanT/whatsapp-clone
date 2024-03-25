@@ -1,0 +1,8 @@
+.Settings {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top: 0px; /* Adjust the top position as needed */
+    left: 0;
+    z-index: 1; 
+}

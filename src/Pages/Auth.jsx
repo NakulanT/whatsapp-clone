@@ -161,7 +161,6 @@ function App() {
                         href="https://cdn.jsdelivr.net/gh/dheereshagrwal/colored-icons@1.7.4/src/app/ci.min.css"
                     />
                     <i className="ci ci-whatsapp ci-2x"></i>
-                    <i className="ci ci-whatsapp ci-6x"></i>
 
                     <h1>Whatsapp Web</h1>
                 </div>

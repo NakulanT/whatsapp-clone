@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./Home.css";
 import ChatProfile from "../components/ChatProfile";
 import Auth from "./Auth.jsx";
+import Settings from "../components/Settings.jsx";
 import LogoutIcon from '@mui/icons-material/Logout';
 import SearchIcon from '@mui/icons-material/Search';
 import ChatHistory from "../components/ChatHistory.jsx";
@@ -123,6 +124,11 @@ const Home = (props) => {
         scrollToBottom(); // Scroll to bottom when selected contact changes
     }, [selectedContact]);
 
+    const handleSettingsClick = (e) => {
+        e.preventDefault(); // Prevent the default behavior of the <a> tag
+        // Add any other logic you want to perform when the Settings icon is clicked
+    };
+
     return (
         <div className="Home">
             <div className="HomePage">
@@ -130,7 +136,7 @@ const Home = (props) => {
                     <img src={props.picture} />
                     <h1>{props.username}</h1>
                     <div>
-                        <a className="SettingIcon"><SettingsIcon /></a>
+                        <a href={<Settings />}  className="SettingIcon" onClick={handleSettingsClick}><SettingsIcon /></a>
                         <a href={<Auth />} className="LogoutIcone"><LogoutIcon /></a>
                     </div>
 

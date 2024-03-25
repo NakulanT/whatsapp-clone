@@ -18,9 +18,7 @@
     text-transform: uppercase;
 }
 
-.ci-4x{
-   visibility: hidden;
-}
+
 
 
 .AuthNav h1 {
@@ -216,15 +214,6 @@
         font-weight: 200;
         margin-top: 0;
         display: none;
-    }
-    
-    .ci-2x {
-        visibility: hidden; /* You can adjust the value as needed */
-    }
-    .ci-6x{
-        position: absolute;
-        top: 20px;
-        visibility: visible;
     }
     
     
