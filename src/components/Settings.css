@@ -5,4 +5,5 @@
     top: 0px; /* Adjust the top position as needed */
     left: 0;
     z-index: 1; 
+    animation: none;
 }
