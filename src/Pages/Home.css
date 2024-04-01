@@ -101,6 +101,8 @@ left: 8%;
 }
 
 
-@media (max-width : 330px) {
-    
+@media (min-width : 700px) {
+    .ContactCard{
+        width: 80px;
+    }
 }
