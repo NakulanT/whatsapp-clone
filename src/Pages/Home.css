@@ -100,9 +100,3 @@ top: 20px;
 left: 8%;
 }
 
-
-@media (min-width : 700px) {
-    .ContactCard{
-        width: 80px;
-    }
-}

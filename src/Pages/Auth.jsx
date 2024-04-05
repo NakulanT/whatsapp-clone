@@ -162,7 +162,7 @@ function App() {
                     />
                     <i className="ci ci-whatsapp ci-2x"></i>
 
-                    <h1>Whatsapp Web</h1>
+                    <h1>Chat Application</h1>
                 </div>
                 <div className="AuthCard">
                     {Siginin ? (<h1 className='TitleCard'>Sign in</h1>) : (<h1>Sign up</h1>)}
