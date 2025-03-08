@@ -170,7 +170,7 @@ function App() {
                     {Siginin ? (
                         <div className='Signin'>
                             <GoogleLogin
-                                clientId="692055383262-r0t5oab7muk0fee2lgk39a5tpgdilmm7.apps.googleusercontent.com"
+                                clientId = "368594816388-24mjflj70m5c42isa7hep5rpmvm4gqjr.apps.googleusercontent.com"
                                 buttonText="Sign in with Google 🚀"
                                 onSuccess={login}
                                 onFailure={login}
@@ -191,7 +191,7 @@ function App() {
                                 />
                                 </div>
                                 <GoogleLogin
-                                    clientId="692055383262-r0t5oab7muk0fee2lgk39a5tpgdilmm7.apps.googleusercontent.com"
+                                    clientId="368594816388-24mjflj70m5c42isa7hep5rpmvm4gqjr.apps.googleusercontent.com"
                                     buttonText="Sign in with Google 🚀"
                                     onSuccess={login}
                                     onFailure={login}
